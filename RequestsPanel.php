@@ -33,7 +33,7 @@ class RequestsPanel extends Object implements IDebugPanel {
 
 	/**
 	 * Renders HTML code for custom tab.
-	 * @return void
+	 * @return string
 	 * @see IDebugPanel::getTab()
 	 */
 	public function getTab() {
@@ -48,7 +48,7 @@ class RequestsPanel extends Object implements IDebugPanel {
 
 	/**
 	 * Renders HTML code for custom panel.
-	 * @return void
+	 * @return string
 	 * @see IDebugPanel::getPanel()
 	 */
 	public function getPanel() {
@@ -73,6 +73,9 @@ class RequestsPanel extends Object implements IDebugPanel {
 		return __CLASS__;
 	}
 
+	/**
+	 * @internal
+	 */
 	public function onShutdown($presenter, $response) {
 
 		$this->response = $response;
