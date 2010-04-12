@@ -102,7 +102,7 @@ class RequestsPanel extends Object implements IDebugPanel {
 		$entry['response'] = substr($class, 0, strpos($class, 'Response'));
 
 		$entry['dumps']['HttpRequest'] = Debug::dump($httpRequest, TRUE);
-		$entry['dumps']['PresenterRequest'] = Debug::dump($application->getPresenter()->getRequest(), TRUE);
+		$entry['dumps']['PresenterRequest'] = Debug::dump($request, TRUE);
 		$entry['dumps']['PresenterResponse'] = Debug::dump($response, TRUE);
 
 		foreach(self::$dumps as $key => $dump) {
@@ -111,7 +111,6 @@ class RequestsPanel extends Object implements IDebugPanel {
 			} else {
 				$entry['dumps'][] = $dump;
 			}
-
 		}
 
 		$session = Environment::getSession('__panels__Requests');
