@@ -94,34 +94,28 @@ class RequestsPanel extends Object implements IDebugPanel {
 		$pinfo = Html::el('table');
 
 		$row = $pinfo->create('tr');
-		$row->create('th')->add('Presenter');
+		$row->create('th', 'Presenter');
 		$row->create('td')->add($presenter->backlink());
 
 
 		if ($signal = $presenter->getSignal()) {
 			$row = $pinfo->create('tr');
-			$row->create('th')->add('Signal');
-
+			$row->create('th','Signal');
 			$receiver = empty($signal[0]) ? "&lt;presenter&gt;" : $signal[0];
-
 			$row->create('td')->add($receiver . " :: " . $signal[1]);
 		}
 
 		$row = $pinfo->create('tr');
-		$row->create('th')->add('Uri');
+		$row->create('th', 'Uri');
 		$row->create('td')->add($httpRequest->getUri()->path);
 
 		$entry['presenter'] = $pinfo;
+
 		$class = get_class($response);
 
-		$code = '';
-		if ($response->getReflection()->hasMethod('getCode')) {
-			$code = $response->getCode();
-		}
-
 		$entry['response'] = substr($class, 0, strpos($class, 'Response'));
-		if ($code) {
-			$entry['response'] .= ' (' . $code . ')';
+		if ($response->getReflection()->hasMethod('getCode')) {
+			$entry['response'] .= ' (' . $response->code . ')';
 		}
 
 		$entry['dumps']['HttpRequest'] = Debug::dump($httpRequest, TRUE);
