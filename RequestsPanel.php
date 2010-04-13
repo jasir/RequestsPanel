@@ -74,6 +74,8 @@ class RequestsPanel extends Object implements IDebugPanel {
 	}
 
 	/**
+	 * @param $presenter Presenter
+	 * @param $response PresenterResponse
 	 * @internal
 	 */
 	public function onShutdown($presenter, $response) {
@@ -89,17 +91,38 @@ class RequestsPanel extends Object implements IDebugPanel {
 		$entry = array();
 		$entry['request'] = $request->getMethod();
 
-		$pinfo = $presenter->backlink();
-		$do = ArrayTools::get($request->getParams(), 'do', NULL);
-		if ($do) {
-			$pinfo .= '<br>' . $do . "!";
-		}
-		$pinfo .= "<br>" . $httpRequest->getUri()->path;
+		$pinfo = Html::el('table');
 
+		$row = $pinfo->create('tr');
+		$row->create('th')->add('Presenter');
+		$row->create('td')->add($presenter->backlink());
+
+
+		if ($signal = $presenter->getSignal()) {
+			$row = $pinfo->create('tr');
+			$row->create('th')->add('Signal');
+
+			$receiver = empty($signal[0]) ? "&lt;presenter&gt;" : $signal[0];
+
+			$row->create('td')->add($receiver . " :: " . $signal[1]);
+		}
+
+		$row = $pinfo->create('tr');
+		$row->create('th')->add('Uri');
+		$row->create('td')->add($httpRequest->getUri()->path);
 
 		$entry['presenter'] = $pinfo;
 		$class = get_class($response);
+
+		$code = '';
+		if ($response->getReflection()->hasMethod('getCode')) {
+			$code = $response->getCode();
+		}
+
 		$entry['response'] = substr($class, 0, strpos($class, 'Response'));
+		if ($code) {
+			$entry['response'] .= ' (' . $code . ')';
+		}
 
 		$entry['dumps']['HttpRequest'] = Debug::dump($httpRequest, TRUE);
 		$entry['dumps']['PresenterRequest'] = Debug::dump($request, TRUE);
