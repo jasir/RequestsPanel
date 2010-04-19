@@ -19,6 +19,9 @@ class RequestsPanel extends Object implements IDebugPanel {
 
 	public function __construct() {
 		$presenter = Environment::getApplication()->getPresenter();
+		if ($presenter === NULL) {
+			throw new Exception('You must instantiate RequestsPanel when presenter is available, i.e. in presenter\'s startup method.', E_WARNING);
+		}
 		$presenter->onShutdown[] = array($this, 'onShutdown');
 	}
 
