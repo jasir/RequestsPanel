@@ -38,7 +38,6 @@ class RequestsPanel extends Object implements IDebugPanel {
 	 */
 	public function getTab() {
 		$logs = Environment::getSession('__panels__Requests')->logs;
-
 		$s = 'Requests (' . count($logs) . ')';
 		if (count($logs) > 1) {
 			$s = Html::el('span')->class('nette-warning')->add($s);
@@ -53,15 +52,15 @@ class RequestsPanel extends Object implements IDebugPanel {
 	 */
 	public function getPanel() {
 		$session = Environment::getSession('__panels__Requests');
+
 		$logs = $session->logs;
 
 		if ($this->response instanceOf RenderResponse ) {
 			unset($session->logs);
+			ob_start();
+			require dirname(__FILE__) . '/bar.requests.panel.phtml';
+			return ob_get_clean();
 		}
-
-		ob_start();
-		require dirname(__FILE__) . '/bar.requests.panel.phtml';
-		return ob_get_clean();
 	}
 
 	/**
