@@ -7,6 +7,7 @@
  * - see nettephp.com
  */
 
+
 class RequestsPanel extends Object implements IDebugPanel {
 
 	private $response;
@@ -40,7 +41,7 @@ class RequestsPanel extends Object implements IDebugPanel {
 	 * @see IDebugPanel::getTab()
 	 */
 	public function getTab() {
-		$logs = Environment::getSession('__panels__Requests')->logs;
+		$logs = Environment::getSession('debug/RequestsPanel')->logs;
 		$s = 'Requests (' . count($logs) . ')';
 		if (count($logs) > 1) {
 			$s = Html::el('span')->class('nette-warning')->add($s);
@@ -54,10 +55,8 @@ class RequestsPanel extends Object implements IDebugPanel {
 	 * @see IDebugPanel::getPanel()
 	 */
 	public function getPanel() {
-		$session = Environment::getSession('__panels__Requests');
-
+		$session = Environment::getSession('debug/RequestsPanel');
 		$logs = $session->logs;
-
 		if ($this->response instanceOf RenderResponse ) {
 			unset($session->logs);
 			ob_start();
@@ -132,13 +131,12 @@ class RequestsPanel extends Object implements IDebugPanel {
 			}
 		}
 
-		$session = Environment::getSession('__panels__Requests');
+		$session = Environment::getSession('debug/RequestsPanel');
 
 		if (!isset($session->logs)) {
 			$session->logs = array();
 		}
-
-		array_push($session->logs, $entry);
+		$session->logs[] = $entry;
 	}
 
 }
