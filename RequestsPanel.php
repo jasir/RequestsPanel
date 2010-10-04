@@ -6,7 +6,13 @@
  * Heavily based on original David Grudl's DebugBar panel from Nette Framework
  * - see nettephp.com
  */
+namespace mbase\Debug;
 
+use \Nette\Object;
+use \Nette\IDebugPanel;
+use \Nette\Environment;
+use \Nette\Debug;
+use \Nette\Web\Html;
 
 class RequestsPanel extends Object implements IDebugPanel {
 
