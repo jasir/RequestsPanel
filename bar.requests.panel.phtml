@@ -1,5 +1,5 @@
 <?php
-/*namespace Nette;*/
+namespace Nette;
 if (!function_exists(/*Nette\*/'_netteRequestCb2')) {
 
 	function _netteRequestCb2($m)
@@ -22,13 +22,12 @@ if (!function_exists(/*Nette\*/'_netteRequestCb2')) {
 
 <table>
 	<thead>
-	<tr><th>Request</th><th>Details</th><th>Response</th><th>Dumps</th></tr>
+	<tr><th>Request</th><th>Details</th><th>Dumps</th></tr>
 	</thead>
 <?php foreach ($logs as $name => $entry): ?>
 	<tr>
 		<td><strong><?php echo $entry['request']?></strong></td>
 		<td nowrap><?php echo $entry['presenter']?></td>
-		<td><?php echo $entry['response']?></td>
 		<td>
 			<a class="nette-toggler" href="#"><abbr>&#x25ba;</abbr></a>
 			<table class="nette-hidden">
@@ -37,7 +36,7 @@ if (!function_exists(/*Nette\*/'_netteRequestCb2')) {
 				<td>
 					<strong><?php if (!is_numeric($key)) echo $key;?></strong>
 				</td>
-				<td><?php echo preg_replace_callback('#(<pre class="nette-dump">|\s+)?(.*)\((\d+)\) <code>#', /*Nette\*/'_netteRequestCb2', $dump) ?>
+				<td><?php echo preg_replace_callback('#(<pre class="nette-dump">|\s+)?(.*)\((\d+)\) <code>#', 'Nette\_netteRequestCb2', $dump) ?>
 
 				</td>
 			</tr>

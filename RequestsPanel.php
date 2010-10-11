@@ -119,12 +119,15 @@ class RequestsPanel extends Object implements IDebugPanel {
 
 		$entry['presenter'] = $pinfo;
 
-		$class = get_class($response);
-
-		$entry['response'] = substr($class, 0, strpos($class, 'Response'));
+		$rInfo = get_class($response);
 		if ($response->getReflection()->hasMethod('getCode')) {
-			$entry['response'] .= ' (' . $response->code . ')';
+			$rInfo .= ' (' . $response->code . ')';
 		}
+
+		$row = $pinfo->create('tr');
+		$row->create('th','Response');
+		$row->create('td',$rInfo);
+
 
 		$entry['dumps']['HttpRequest'] = Debug::dump($httpRequest, TRUE);
 		$entry['dumps']['PresenterRequest'] = Debug::dump($request, TRUE);
