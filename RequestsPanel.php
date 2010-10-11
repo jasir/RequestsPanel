@@ -19,18 +19,36 @@ class RequestsPanel extends Object implements IDebugPanel {
 
 	private $response;
 
+	static private $presenter;
+
 	static private $dumps = array();
+
+	static private $instance;
 
 	/* --- Properties --- */
 
 	/* --- Public Methods--- */
 
-	public function __construct() {
+	public static function register() {
+
 		$presenter = Environment::getApplication()->getPresenter();
 		if ($presenter === NULL) {
 			throw new Exception('You must instantiate RequestsPanel when presenter is available, i.e. in presenter\'s startup method.', E_WARNING);
 		}
-		$presenter->onShutdown[] = array($this, 'onShutdown');
+
+		//register panel only once
+		if (!self::$instance) {
+			self::$instance = new \Extras\Debug\RequestsPanel();
+			\Nette\Debug::addPanel(self::$instance);
+		}
+
+		//but callback for each new presenter
+		if(self::$presenter !== $presenter) {
+			self::$presenter = $presenter;
+			$presenter->onShutdown[] = array(self::$instance, 'onShutdown');
+		}
+
+
 	}
 
 	public static function dump($var, $label = NULL) {
