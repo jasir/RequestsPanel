@@ -4,7 +4,7 @@ if (!function_exists(/*Nette\*/'_netteRequestCb2')) {
 
 	function _netteRequestCb2($m)
 	{
-		return "$m[1]<a href='#' class='nette-toggler'>$m[2]($m[3]) " . '<abbr>&#x25ba;</abbr> </a><code class="nette-hidden">';
+		return "$m[1]<a href=\"#\" class=\"nette-toggler\" rel=\"next\">$m[2]($m[3]) <abbr>&#x25ba;</abbr> </a><code class=\"nette-hidden\">";
 	}
 }
 
@@ -29,7 +29,7 @@ if (!function_exists(/*Nette\*/'_netteRequestCb2')) {
 		<td><strong><?php echo $entry['request']?></strong></td>
 		<td nowrap><?php echo $entry['presenter']?></td>
 		<td>
-			<a class="nette-toggler" href="#"><abbr>&#x25ba;</abbr></a>
+			<a class="nette-toggler" rel="next" href="#"><abbr>&#x25ba;</abbr></a>
 			<table class="nette-hidden">
 			<?php foreach ($entry['dumps'] as $key => $dump): ?>
 			<tr>
