@@ -125,11 +125,12 @@ class RequestsPanel extends Object implements IDebugPanel {
 			$rInfo .= ' (' . $response->code . ')';
 		}
 
-		$entry['info']['presenter']          = $presenter->backlink();
-		$entry['info']['response']           = $rInfo;
-		$entry['info']['uri']                = $httpRequest->getUri()->path;
-		$entry['info']['request']            = $request->getMethod();
-		$entry['info']['signal']             = $signal;
+		$entry['info']['presenter'] = $presenter->backlink();
+		$entry['info']['response']  = $rInfo;
+		$entry['info']['uri']       = $httpRequest->getUri();
+		$entry['info']['uriPath']   = $httpRequest->getUri()->path;
+		$entry['info']['request']   = $request->getMethod();
+		$entry['info']['signal']    = $signal;
 
 		$entry['dumps']['HttpRequest']       = DebugHelpers::clickableDump($httpRequest);
 		$entry['dumps']['PresenterRequest']  = DebugHelpers::clickableDump($request);

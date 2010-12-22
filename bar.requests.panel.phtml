@@ -10,34 +10,34 @@
 <div class="nette-inner">
 
 <table>
-	<thead>
-		<tr><th>Method</th><th>Details</th></tr>
-	</thead>
+
 	<tbody>
 	<?php foreach ($logs as $name => $entry): ?>
-	<tr>
-		<th><?php echo $entry['info']['request']?></th>
-		<td nowrap>
-			<table>
-				<tr><th>Uri</th><td><?php echo $entry['info']['uri']?></td></tr>
-				<tr><th>Presenter</th><td><?php echo $entry['info']['presenter']?></td></tr>
-				<?php if ($entry['info']['signal']) :?><tr><th>Signal</th><td><?php echo $entry['info']['signal']?></td></tr><?php endif ?>
-				<tr><th>Response</th><td><?php echo $entry['info']['response']?></td></tr>
+		<tr>
+			<th colspan=2><?php echo $entry['info']['request'] . " " . $entry['info']['uriPath']?></th>
+		</tr>
+		<tr>
+			<td nowrap>
+				<table width=100%>
+					<tr><th>Uri</th><td><a style="color:blue !important; text-decoration:underline" href="<?php echo $entry['info']['uri']?>"><?php echo $entry['info']['uri']?></a></td></tr>
+					<tr><th>Presenter</th><td><?php echo $entry['info']['presenter']?></td></tr>
+					<?php if ($entry['info']['signal']) :?><tr><th>Signal</th><td><?php echo $entry['info']['signal']?></td></tr><?php endif ?>
+					<tr><th>Response</th><td><?php echo $entry['info']['response']?></td></tr>
 
-				<tr>
-					<th>Dumps</th>
-					<td>
-							<a class="nette-toggler" rel="next" href="#"><abbr>&#x25ba;</abbr></a>
-							<table class="nette-hidden">
-								<?php foreach ($entry['dumps'] as $key => $dump): ?>
-								<tr>
-									<th><strong><?php if (!is_numeric($key)) echo $key;?></strong></th>
-									<td>
-										<?php echo $dump ?>
-									</td>
-								</tr>
-							<?php endforeach ?>
-							</table>
+					<tr>
+						<th>Dumps</th>
+						<td width=100%>
+								<a class="nette-toggler" rel="next" href="#"><abbr>&#x25ba;</abbr></a>
+								<table class="nette-hidden">
+									<?php foreach ($entry['dumps'] as $key => $dump): ?>
+									<tr>
+										<th><strong><?php if (!is_numeric($key)) echo $key;?></strong></th>
+										<td>
+											<?php echo $dump ?>
+										</td>
+									</tr>
+								<?php endforeach ?>
+								</table>
 					</td>
 				</tr>
 				</tbody>
