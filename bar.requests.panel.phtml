@@ -1,54 +1,40 @@
-<?php
-namespace Nette;
-if (!function_exists(/*Nette\*/'_netteRequestCb2')) {
-
-	function _netteRequestCb2($m)
-	{
-		return "$m[1]<a href=\"#\" class=\"nette-toggler\" rel=\"next\">$m[2]($m[3]) <abbr>&#x25ba;</abbr> </a><code class=\"nette-hidden\">";
-	}
-}
-
-?>
-<style>
-/* <![CDATA[ */
-/* ]]> */
-</style>
-
-
-
 <h1>Requests (<?php echo count($logs)?>)</h1>
 
 <div class="nette-inner">
 
 <table>
-	<thead>
-		<tr><th>Method</th><th>Details</th></tr>
-	</thead>
+
 	<tbody>
 	<?php foreach ($logs as $name => $entry): ?>
-	<tr>
-		<th><?php echo $entry['info']['request']?></th>
-		<td nowrap>
-			<table>
-				<tr><th>Uri</th><td><?php echo $entry['info']['uri']?></td></tr>
-				<tr><th>Presenter</th><td><?php echo $entry['info']['presenter']?></td></tr>
-				<?php if ($entry['info']['signal']) :?><tr><th>Signal</th><td><?php echo $entry['info']['signal']?></td></tr><?php endif ?>
-				<tr><th>Response</th><td><?php echo $entry['info']['response']?></td></tr>
+		<tr>
+			<th colspan=2>
+				<?php echo $entry['info']['request'] . " " . $entry['info']['uriPath']?>
+				&nbsp;&rArr;&nbsp;
+				<?php echo $entry['info']['presenter']?>
 
-				<tr>
-					<th>Dumps</th>
-					<td>
-							<a class="nette-toggler" rel="next" href="#"><abbr>&#x25ba;</abbr></a>
-							<table class="nette-hidden">
-								<?php foreach ($entry['dumps'] as $key => $dump): ?>
-								<tr>
-									<th><strong><?php if (!is_numeric($key)) echo $key;?></strong></th>
-									<td>
-										<?php echo preg_replace_callback('#(<pre class="nette-dump">|\s+)?(.*)\((\d+)\) <code>#', 'Nette\_netteRequestCb2', $dump) ?>
-									</td>
-								</tr>
-							<?php endforeach ?>
-							</table>
+				&nbsp;&rArr;&nbsp;
+				<?php echo $entry['info']['response']?>
+			</th>
+		</tr>
+		<tr>
+			<td nowrap>
+				<table width=100%>
+					<tr><th>Uri</th><td><a style="color:blue !important; text-decoration:underline" href="<?php echo $entry['info']['uri']?>"><?php echo $entry['info']['uri']?></a></td></tr>
+					<?php if ($entry['info']['signal']) :?><tr><th>Signal</th><td><?php echo $entry['info']['signal']?></td></tr><?php endif ?>
+					<tr>
+						<th>Dumps</th>
+						<td width=100%>
+								<a class="nette-toggler" rel="next" href="#"><abbr>&#x25ba;</abbr></a>
+								<table class="nette-hidden">
+									<?php foreach ($entry['dumps'] as $key => $dump): ?>
+									<tr>
+										<th><strong><?php if (!is_numeric($key)) echo $key;?></strong></th>
+										<td>
+											<?php echo $dump ?>
+										</td>
+									</tr>
+								<?php endforeach ?>
+								</table>
 					</td>
 				</tr>
 				</tbody>
