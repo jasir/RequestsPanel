@@ -1,10 +1,3 @@
-<style>
-/* <![CDATA[ */
-/* ]]> */
-</style>
-
-
-
 <h1>Requests (<?php echo count($logs)?>)</h1>
 
 <div class="nette-inner">
@@ -14,16 +7,20 @@
 	<tbody>
 	<?php foreach ($logs as $name => $entry): ?>
 		<tr>
-			<th colspan=2><?php echo $entry['info']['request'] . " " . $entry['info']['uriPath']?></th>
+			<th colspan=2>
+				<?php echo $entry['info']['request'] . " " . $entry['info']['uriPath']?>
+				&nbsp;&rArr;&nbsp;
+				<?php echo $entry['info']['presenter']?>
+
+				&nbsp;&rArr;&nbsp;
+				<?php echo $entry['info']['response']?>
+			</th>
 		</tr>
 		<tr>
 			<td nowrap>
 				<table width=100%>
 					<tr><th>Uri</th><td><a style="color:blue !important; text-decoration:underline" href="<?php echo $entry['info']['uri']?>"><?php echo $entry['info']['uri']?></a></td></tr>
-					<tr><th>Presenter</th><td><?php echo $entry['info']['presenter']?></td></tr>
 					<?php if ($entry['info']['signal']) :?><tr><th>Signal</th><td><?php echo $entry['info']['signal']?></td></tr><?php endif ?>
-					<tr><th>Response</th><td><?php echo $entry['info']['response']?></td></tr>
-
 					<tr>
 						<th>Dumps</th>
 						<td width=100%>
