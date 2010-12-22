@@ -133,6 +133,7 @@ class RequestsPanel extends Object implements IDebugPanel {
 
 		$entry['dumps']['HttpRequest']       = DebugHelpers::clickableDump($httpRequest);
 		$entry['dumps']['PresenterRequest']  = DebugHelpers::clickableDump($request);
+		$entry['dumps']['Presenter']  = DebugHelpers::clickableDump($presenter);
 		$entry['dumps']['PresenterResponse'] = DebugHelpers::clickableDump($response);
 
 
