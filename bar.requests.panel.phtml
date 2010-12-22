@@ -1,14 +1,3 @@
-<?php
-namespace Nette;
-if (!function_exists(/*Nette\*/'_netteRequestCb2')) {
-
-	function _netteRequestCb2($m)
-	{
-		return "$m[1]<a href=\"#\" class=\"nette-toggler\" rel=\"next\">$m[2]($m[3]) <abbr>&#x25ba;</abbr> </a><code class=\"nette-hidden\">";
-	}
-}
-
-?>
 <style>
 /* <![CDATA[ */
 /* ]]> */
@@ -44,7 +33,7 @@ if (!function_exists(/*Nette\*/'_netteRequestCb2')) {
 								<tr>
 									<th><strong><?php if (!is_numeric($key)) echo $key;?></strong></th>
 									<td>
-										<?php echo preg_replace_callback('#(<pre class="nette-dump">|\s+)?(.*)\((\d+)\) <code>#', 'Nette\_netteRequestCb2', $dump) ?>
+										<?php echo $dump ?>
 									</td>
 								</tr>
 							<?php endforeach ?>

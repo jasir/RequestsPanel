@@ -12,6 +12,7 @@ use \Nette\Object;
 use \Nette\IDebugPanel;
 use \Nette\Environment;
 use \Nette\Debug;
+use \Nette\DebugHelpers;
 use \Nette\Web\Html;
 use \Nette\Application\RenderResponse;
 
@@ -52,7 +53,7 @@ class RequestsPanel extends Object implements IDebugPanel {
 	}
 
 	public static function dump($var, $label = NULL) {
-		$s = Debug::dump($var, TRUE);
+		$s = DebugHelpers::clickableDump($var);
 		if ($label === NULL) {
 			self::$dumps[] = $s;
 		} else {
@@ -130,9 +131,9 @@ class RequestsPanel extends Object implements IDebugPanel {
 		$entry['info']['request']            = $request->getMethod();
 		$entry['info']['signal']             = $signal;
 
-		$entry['dumps']['HttpRequest']       = Debug::dump($httpRequest, TRUE);
-		$entry['dumps']['PresenterRequest']  = Debug::dump($request, TRUE);
-		$entry['dumps']['PresenterResponse'] = Debug::dump($response, TRUE);
+		$entry['dumps']['HttpRequest']       = DebugHelpers::clickableDump($httpRequest);
+		$entry['dumps']['PresenterRequest']  = DebugHelpers::clickableDump($request);
+		$entry['dumps']['PresenterResponse'] = DebugHelpers::clickableDump($response);
 
 
 		foreach(self::$dumps as $key => $dump) {
