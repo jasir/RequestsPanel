@@ -108,53 +108,38 @@ class RequestsPanel extends Object implements IDebugPanel {
 		$this->response = $response;
 
 		$application = Environment::getApplication();
-		$presenter = $application->getPresenter();
-		$request = $presenter->getRequest();
-
+		$presenter   = $application->getPresenter();
+		$request     = $presenter->getRequest();
 		$httpRequest = Environment::getHttpRequest();
 
 		$entry = array();
-		$entry['request'] = $request->getMethod();
-
-		$pinfo = Html::el('table');
-
-		$row = $pinfo->create('tr');
-		$row->create('th', 'Presenter');
-		$row->create('td')->add($presenter->backlink());
-
 
 		if ($signal = $presenter->getSignal()) {
-			$row = $pinfo->create('tr');
-			$row->create('th','Signal');
-			$receiver = empty($signal[0]) ? "&lt;presenter&gt;" : $signal[0];
-			$row->create('td')->add($receiver . " :: " . $signal[1]);
+			$receiver = empty($signal[0]) ? $presenter->name : $signal[0];
+			$signal = $receiver . " :: " . $signal[1];
 		}
-
-		$row = $pinfo->create('tr');
-		$row->create('th', 'Uri');
-		$row->create('td')->add($httpRequest->getUri()->path);
-
-		$entry['presenter'] = $pinfo;
 
 		$rInfo = get_class($response);
 		if ($response->getReflection()->hasMethod('getCode')) {
 			$rInfo .= ' (' . $response->code . ')';
 		}
 
-		$row = $pinfo->create('tr');
-		$row->create('th','Response');
-		$row->create('td',$rInfo);
+		$entry['info']['presenter']          = $presenter->backlink();
+		$entry['info']['response']           = $rInfo;
+		$entry['info']['uri']                = $httpRequest->getUri()->path;
+		$entry['info']['request']            = $request->getMethod();
+		$entry['info']['signal']             = $signal;
 
-
-		$entry['dumps']['HttpRequest'] = Debug::dump($httpRequest, TRUE);
-		$entry['dumps']['PresenterRequest'] = Debug::dump($request, TRUE);
+		$entry['dumps']['HttpRequest']       = Debug::dump($httpRequest, TRUE);
+		$entry['dumps']['PresenterRequest']  = Debug::dump($request, TRUE);
 		$entry['dumps']['PresenterResponse'] = Debug::dump($response, TRUE);
 
+
 		foreach(self::$dumps as $key => $dump) {
-			if (!is_numeric($key)) {
-				$entry['dumps'][$key] = $dump;
-			} else {
+			if (is_numeric($key)) {
 				$entry['dumps'][] = $dump;
+			} else {
+				$entry['dumps'][$key] = $dump;
 			}
 		}
 
