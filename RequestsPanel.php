@@ -52,22 +52,12 @@ class RequestsPanel extends Object implements IDebugPanel {
 
 	}
 
-	public static function dump($var, $label = NULL, $depth = NULL) {
-		if ($depth) {
-			$depthSave = Debug::$maxDepth;
-			Debug::$maxDepth = $depth;
-		}
-		$dump = DebugHelpers::clickableDump($var);
+	public static function dump($var, $label = NULL) {
+		$s = DebugHelpers::clickableDump($var);
 		if ($label === NULL) {
-			$label = gettype($var);
-			if ($label === 'object') {
-				$label = get_class($var) . "('object')";
-			}
+			self::$dumps[] = $s;
 		} else {
-			self::$dumps[] = array('title' => $label, 'dump' => $dump);
-		}
-		if ($depth) {
-			Debug::$maxDepth = $depthSave;
+			self::$dumps[$label] = $s;
 		}
 	}
 
@@ -141,12 +131,19 @@ class RequestsPanel extends Object implements IDebugPanel {
 		$entry['info']['request']   = $request->getMethod();
 		$entry['info']['signal']    = $signal;
 
-		$entry['dumps'][] = array('title' => 'HttpRequest', 'dump' => DebugHelpers::clickableDump($httpRequest));
-		$entry['dumps'][] = array('title' => 'PresenterRequest', 'dump' => DebugHelpers::clickableDump($request));
-		$entry['dumps'][] = array('title' => 'Presenter', 'dump' => DebugHelpers::clickableDump($presenter));
-		$entry['dumps'][] = array('title' => 'PresenterResponse', 'dump' => DebugHelpers::clickableDump($response));
+		$entry['dumps']['HttpRequest']       = DebugHelpers::clickableDump($httpRequest);
+		$entry['dumps']['PresenterRequest']  = DebugHelpers::clickableDump($request);
+		$entry['dumps']['Presenter']  = DebugHelpers::clickableDump($presenter);
+		$entry['dumps']['PresenterResponse'] = DebugHelpers::clickableDump($response);
 
-		$entry['dumps'] = array_merge($entry['dumps'], self::$dumps);
+
+		foreach(self::$dumps as $key => $dump) {
+			if (is_numeric($key)) {
+				$entry['dumps'][] = $dump;
+			} else {
+				$entry['dumps'][$key] = $dump;
+			}
+		}
 
 		$session = Environment::getSession('debug/RequestsPanel');
 
