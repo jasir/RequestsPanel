@@ -26,11 +26,11 @@
 						<td width=100%>
 								<a class="nette-toggler" rel="next" href="#"><abbr>&#x25ba;</abbr></a>
 								<table class="nette-hidden">
-									<?php foreach ($entry['dumps'] as $key => $dump): ?>
+									<?php foreach ($entry['dumps'] as $dump): ?>
 									<tr>
-										<th><strong><?php if (!is_numeric($key)) echo $key;?></strong></th>
+										<th><strong><?php echo $dump['title'];?></strong></th>
 										<td>
-											<?php echo $dump ?>
+											<?php echo $dump['dump'] ?>
 										</td>
 									</tr>
 								<?php endforeach ?>
