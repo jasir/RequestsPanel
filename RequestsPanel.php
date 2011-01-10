@@ -52,12 +52,19 @@ class RequestsPanel extends Object implements IDebugPanel {
 
 	}
 
-	public static function dump($var, $label = NULL) {
+	public static function dump($var, $label = NULL, $depth = NULL) {
+		if ($depth !== NULL) {
+			$saveDepth = Debug::$maxDepth;
+			Debug::$maxDepth = $depth;
+		}
 		$s = DebugHelpers::clickableDump($var);
 		if ($label === NULL) {
 			self::$dumps[] = $s;
 		} else {
 			self::$dumps[$label] = $s;
+		}
+		if ($depth !== NULL) {
+			Debug::$maxDepth = $saveDepth;
 		}
 	}
 
