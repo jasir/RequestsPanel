@@ -1,10 +1,7 @@
 <?php
 /**
  * @author jasir
- * @license LGPL
- *
- * Heavily based on original David Grudl's DebugBar panel from Nette Framework
- * - see nettephp.com
+ * @license WTFPL (http://en.wikipedia.org/wiki/WTFPL)
  */
 namespace Extras\Debug;
 
