@@ -31,7 +31,7 @@ class RequestsPanel extends Object implements IDebugPanel {
 
 		$presenter = Environment::getApplication()->getPresenter();
 		if ($presenter === NULL) {
-			throw new Exception('You must instantiate RequestsPanel when presenter is available, i.e. in presenter\'s startup method.', E_WARNING);
+			throw new \Exception('You must instantiate RequestsPanel when presenter is available, i.e. in presenter\'s startup method.', E_WARNING);
 		}
 
 		//register panel only once
