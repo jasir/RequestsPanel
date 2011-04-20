@@ -6,14 +6,14 @@
 namespace Extras\Debug;
 
 use \Nette\Object;
-use \Nette\IDebugPanel;
+use Nette\Diagnostics\IPanel;
 use \Nette\Environment;
-use \Nette\Debug;
-use \Nette\DebugHelpers;
-use \Nette\Web\Html;
-use \Nette\Application\RenderResponse;
+use Nette\Diagnostics\Debugger;
+use Nette\Diagnostics\Helpers;
+use Nette\Utils\Html;
+use Nette\Application\Responses\TextResponse;
 
-class RequestsPanel extends Object implements IDebugPanel {
+class RequestsPanel extends Object implements IPanel {
 
 	private $response;
 
@@ -36,8 +36,8 @@ class RequestsPanel extends Object implements IDebugPanel {
 
 		//register panel only once
 		if (!self::$instance) {
-			self::$instance = new \Extras\Debug\RequestsPanel();
-			\Nette\Debug::addPanel(self::$instance);
+			self::$instance = new RequestsPanel();
+			Debugger::addPanel(self::$instance);
 		}
 
 		//but callback for each new presenter
@@ -51,17 +51,17 @@ class RequestsPanel extends Object implements IDebugPanel {
 
 	public static function dump($var, $label = NULL, $depth = NULL) {
 		if ($depth !== NULL) {
-			$saveDepth = Debug::$maxDepth;
-			Debug::$maxDepth = $depth;
+			$saveDepth = Debugger::$maxDepth;
+			Debugger::$maxDepth = $depth;
 		}
-		$s = DebugHelpers::clickableDump($var);
+		$s = Helpers::clickableDump($var);
 		if ($label === NULL) {
 			self::$dumps[] = $s;
 		} else {
 			self::$dumps[$label] = $s;
 		}
 		if ($depth !== NULL) {
-			Debug::$maxDepth = $saveDepth;
+			Debugger::$maxDepth = $saveDepth;
 		}
 	}
 
@@ -87,7 +87,7 @@ class RequestsPanel extends Object implements IDebugPanel {
 	public function getPanel() {
 		$session = Environment::getSession('debug/RequestsPanel');
 		$logs = $session->logs;
-		if ($this->response instanceOf RenderResponse ) {
+		if ($this->response instanceOf TextResponse ) {
 			unset($session->logs);
 			ob_start();
 			require dirname(__FILE__) . '/bar.requests.panel.phtml';
@@ -137,10 +137,10 @@ class RequestsPanel extends Object implements IDebugPanel {
 		$entry['info']['request']   = $request->getMethod();
 		$entry['info']['signal']    = $signal;
 
-		$entry['dumps']['HttpRequest']       = DebugHelpers::clickableDump($httpRequest);
-		$entry['dumps']['PresenterRequest']  = DebugHelpers::clickableDump($request);
-		$entry['dumps']['Presenter']  = DebugHelpers::clickableDump($presenter);
-		$entry['dumps']['PresenterResponse'] = DebugHelpers::clickableDump($response);
+		$entry['dumps']['HttpRequest']       = Helpers::clickableDump($httpRequest);
+		$entry['dumps']['PresenterRequest']  = Helpers::clickableDump($request);
+		$entry['dumps']['Presenter']  = Helpers::clickableDump($presenter);
+		$entry['dumps']['PresenterResponse'] = Helpers::clickableDump($response);
 
 
 		foreach(self::$dumps as $key => $dump) {
