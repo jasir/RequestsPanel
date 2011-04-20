@@ -132,8 +132,8 @@ class RequestsPanel extends Object implements IPanel {
 
 		$entry['info']['presenter'] = $presenter->backlink();
 		$entry['info']['response']  = $rInfo;
-		$entry['info']['uri']       = $httpRequest->getUri();
-		$entry['info']['uriPath']   = $httpRequest->getUri()->path;
+		$entry['info']['uri']       = $httpRequest->getUrl();
+		$entry['info']['uriPath']   = $httpRequest->getUrl()->path;
 		$entry['info']['request']   = $request->getMethod();
 		$entry['info']['signal']    = $signal;
 
