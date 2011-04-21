@@ -5,15 +5,15 @@
  */
 namespace Extras\Debug;
 
-use \Nette\Object;
-use Nette\Diagnostics\IPanel;
-use \Nette\Environment;
+use Nette\Object;
+use Nette\Diagnostics\IBarPanel;
+use Nette\Environment;
 use Nette\Diagnostics\Debugger;
 use Nette\Diagnostics\Helpers;
 use Nette\Utils\Html;
 use Nette\Application\Responses\TextResponse;
 
-class RequestsPanel extends Object implements IPanel {
+class RequestsPanel extends Object implements IBarPanel {
 
 	private $response;
 
