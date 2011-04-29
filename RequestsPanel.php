@@ -139,7 +139,7 @@ class RequestsPanel extends Object implements IBarPanel {
 
 		$entry['dumps']['HttpRequest']       = Helpers::clickableDump($httpRequest);
 		$entry['dumps']['PresenterRequest']  = Helpers::clickableDump($request);
-		$entry['dumps']['Presenter']  = Helpers::clickableDump($presenter);
+		$entry['dumps']['Presenter']         = Helpers::clickableDump($presenter);
 		$entry['dumps']['PresenterResponse'] = Helpers::clickableDump($response);
 
 

@@ -1,7 +1,7 @@
 <h1>Requests (<?php echo count($logs)?>)</h1>
 
 <div class="nette-inner">
-
+<?php if (count($logs) > 0) { ?>
 <table>
 
 	<tbody>
@@ -42,7 +42,9 @@
 				<?php endforeach ?>
 
 </table>
-
+<?php } else { ?>
+	<p>No requests</p>
+<?php } ?>
 </div>
 
 
