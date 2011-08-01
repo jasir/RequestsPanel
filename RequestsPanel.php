@@ -125,13 +125,15 @@ class RequestsPanel extends Object implements IBarPanel {
 			$signal = $receiver . " :: " . $signal[1];
 		}
 
-		$rInfo = get_class($response);
-		if ($response->getReflection()->hasMethod('getCode')) {
-			$rInfo .= ' (' . $response->code . ')';
+		if ($response !== NULL) {
+			$rInfo = get_class($response);
+			if ($response->getReflection()->hasMethod('getCode')) {
+				$rInfo .= ' (' . $response->code . ')';
+			}
 		}
 
 		$entry['info']['presenter'] = $presenter->backlink();
-		$entry['info']['response']  = $rInfo;
+		$entry['info']['response']  = $response === NULL ? 'NO RESPONSE' : $rInfo;
 		$entry['info']['uri']       = $httpRequest->getUrl();
 		$entry['info']['uriPath']   = $httpRequest->getUrl()->path;
 		$entry['info']['request']   = $request->getMethod();
