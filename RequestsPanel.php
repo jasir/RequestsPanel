@@ -136,6 +136,7 @@ class RequestsPanel extends Object implements IBarPanel {
 		$entry['info']['uriPath']   = $httpRequest->getUrl()->path;
 		$entry['info']['request']   = $request->getMethod();
 		$entry['info']['signal']    = $signal;
+		$entry['info']['time']      = number_format((microtime(TRUE) - Debugger::$time) * 1000, 1, '.', ' ');
 
 		$entry['dumps']['HttpRequest']       = Helpers::clickableDump($httpRequest);
 		$entry['dumps']['PresenterRequest']  = Helpers::clickableDump($request);
