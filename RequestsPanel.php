@@ -37,7 +37,7 @@ class RequestsPanel extends Object implements IBarPanel {
 		//register panel only once
 		if (!self::$instance) {
 			self::$instance = new RequestsPanel();
-			Debugger::addPanel(self::$instance);
+			Debugger::$bar->addPanel(self::$instance);
 		}
 
 		//but callback for each new presenter
