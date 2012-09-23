@@ -8,28 +8,27 @@
 	{foreach $logs as $name => $entry}
 		<tr>
 			<th colspan=2>
-				{$entry['info']['request']} {$entry['info']['uriPath']}
-				&nbsp;&rArr;&nbsp;
-				{$entry['info']['presenter']}
-
-				&nbsp;&rArr;&nbsp;
-				{$entry['info']['response']}
-				[{$entry['info']['time']} ms]
+				<span style="font-weight:normal;display:block;float:right;padding-left:7px">{$entry['info']['time']} ms</span>
+				{$entry['info']['request']}
+				<a style="" href="{$entry['info']['uri']}">{$entry['info']['uriPath']}</a>
 			</th>
 		</tr>
 		<tr>
 			<td nowrap>
 				<table width=100%>
-					<tr><th>Uri</th><td><a style="color:blue !important; text-decoration:underline" href="{$entry['info']['uri']}">{$entry['info']['uri']}</a></td></tr>
+					<tr><th>Action</th><td><code>{$entry['info']['presenter']}</code></td></tr>
+					<tr><th>Response</th><td><code>{$entry['info']['response']}</code></td></tr>
 					{if $entry['info']['signal']}<tr><th>Signal</th><td>{$entry['info']['signal']}</td></tr>{/if}
 					<tr>
-						<th>Dumps</th>
+						<th>Details</th>
 						<td width=100%>
 								<a class="nette-toggler" rel="next" href="#"><abbr>&#x25ba;</abbr></a>
 								<table class="nette-hidden">
 									{foreach $entry['dumps'] as $key => $dump}
 									<tr>
-										<th><strong>{if !is_numeric($key)}{$key}{/if}</strong></th>
+										{if !is_numeric($key)}
+										<th><strong>{$key}</strong></th>
+										{/if}
 										<td>
 											{!$dump}
 										</td>
@@ -41,12 +40,9 @@
 				</tbody>
 				</table>
 	{/foreach}
-
+	</tbody>
 </table>
 {else}
 	<p>No requests</p>
 {/if}
 </div>
-
-
-
