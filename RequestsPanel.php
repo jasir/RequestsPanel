@@ -12,6 +12,9 @@ use Nette\Diagnostics\Debugger;
 use Nette\Diagnostics\Helpers;
 use Nette\Utils\Html;
 use Nette\Application\Responses\TextResponse;
+use Nette\Templating\FileTemplate;
+use Nette\Templating\IFileTemplate;
+use Nette\Latte\Engine as LatteFilter;
 
 class RequestsPanel extends Object implements IBarPanel {
 
@@ -72,11 +75,13 @@ class RequestsPanel extends Object implements IBarPanel {
 	 */
 	public function getTab() {
 		$logs = Environment::getSession('debug/RequestsPanel')->logs;
-		$s  = '<span title="Requests">';
-		$s .= '<img src="data:image/gif;base64,R0lGODlhEAAQAKUkAAAAAIUlEqEtFqkvFrMxGEJdc0VheME1GklngE1shk9vit09HlR2k1d6mOZjSehvV+yKd+2SgJuyxqK3yam9zqu+zrHD0vOzpvO4rPXEusnV4MzX4c/a5PfOxtLc5dXe5vjUzfjWz9ri6dvj6v///////////////////////////////////////////////////////////////////////////////////////////////////////////////yH5BAEKAD8ALAAAAAAQABAAAAZiwJ/wBxgaj0IAqIg8AkIRArNJ7EQih8HU2Vk8IIJAYDsEmC8RgZlsBGDSzLW5nYEnPRXGFhBxqJMcEwV7ckkbgmxlZhqIc0gAHxQWEgkNCYlEHxMTCgaYSSMTCJ9lIqRtRkEAOw%3D%3D">';
-		$s .= ($cnt = count($logs)) > 1 ? Html::el('span')->class('nette-warning')->add("[$cnt]") : "[1]";
-		$s .= '</span>';
-		return $s;
+		$template = new FileTemplate(dirname(__FILE__) .
+			'/bar.requests.tab.latte');
+		$template->numberOfLogs = count( $logs );
+		$template->registerFilter(new LatteFilter);
+		$template->registerHelper('plural', 'Helpers::plural');
+
+		return $template->__toString();
 	}
 
 	/**
@@ -89,9 +94,12 @@ class RequestsPanel extends Object implements IBarPanel {
 		$logs = $session->logs;
 		if ($this->response instanceOf TextResponse ) {
 			unset($session->logs);
-			ob_start();
-			require dirname(__FILE__) . '/bar.requests.panel.phtml';
-			return ob_get_clean();
+			$template = new FileTemplate(dirname(__FILE__) . '/bar.requests.panel.latte');
+			$template->registerFilter(new LatteFilter);
+			$template->registerHelper('plural', 'Helpers::plural');
+			$template->logs = $logs;
+			$template->numberOfLogs = count( $logs );
+			return $template->__toString();
 		}
 	}
 
