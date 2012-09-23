@@ -1,4 +1,4 @@
-<h1>Requests ({=count($logs)})</h1>
+<h1>{$numberOfLogs} {$numberOfLogs|plural,'request','requests'}</h1>
 
 <div class="nette-inner">
 {if count($logs) > 0}

@@ -79,6 +79,7 @@ class RequestsPanel extends Object implements IBarPanel {
 			'/bar.requests.tab.latte');
 		$template->numberOfLogs = count( $logs );
 		$template->registerFilter(new LatteFilter);
+		$template->registerHelper('plural', 'Helpers::plural');
 
 		return $template->__toString();
 	}
@@ -95,7 +96,9 @@ class RequestsPanel extends Object implements IBarPanel {
 			unset($session->logs);
 			$template = new FileTemplate(dirname(__FILE__) . '/bar.requests.panel.latte');
 			$template->registerFilter(new LatteFilter);
+			$template->registerHelper('plural', 'Helpers::plural');
 			$template->logs = $logs;
+			$template->numberOfLogs = count( $logs );
 			return $template->__toString();
 		}
 	}
