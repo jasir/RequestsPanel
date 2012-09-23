@@ -14,3 +14,7 @@ Usage anywhere:
 
 	use \Extras\Debug\RequestsPanel;
 	RequestsPanel::dump($variable, 'My Variable'); // label can be omitted
+
+Example:
+
+<img src="http://imageshack.us/a/img525/7865/screenshot20120923at600.png" alt="Screenshot" />
