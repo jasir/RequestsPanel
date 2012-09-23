@@ -1,0 +1,52 @@
+<h1>Requests ({=count($logs)})</h1>
+
+<div class="nette-inner">
+{if count($logs) > 0}
+<table>
+
+	<tbody>
+	{foreach $logs as $name => $entry}
+		<tr>
+			<th colspan=2>
+				{$entry['info']['request']} {$entry['info']['uriPath']}
+				&nbsp;&rArr;&nbsp;
+				{$entry['info']['presenter']}
+
+				&nbsp;&rArr;&nbsp;
+				{$entry['info']['response']}
+				[{$entry['info']['time']} ms]
+			</th>
+		</tr>
+		<tr>
+			<td nowrap>
+				<table width=100%>
+					<tr><th>Uri</th><td><a style="color:blue !important; text-decoration:underline" href="{$entry['info']['uri']}">{$entry['info']['uri']}</a></td></tr>
+					{if $entry['info']['signal']}<tr><th>Signal</th><td>{$entry['info']['signal']}</td></tr>{/if}
+					<tr>
+						<th>Dumps</th>
+						<td width=100%>
+								<a class="nette-toggler" rel="next" href="#"><abbr>&#x25ba;</abbr></a>
+								<table class="nette-hidden">
+									{foreach $entry['dumps'] as $key => $dump}
+									<tr>
+										<th><strong>{if !is_numeric($key)}{$key}{/if}</strong></th>
+										<td>
+											{!$dump}
+										</td>
+									</tr>
+								{/foreach}
+								</table>
+					</td>
+				</tr>
+				</tbody>
+				</table>
+	{/foreach}
+
+</table>
+{else}
+	<p>No requests</p>
+{/if}
+</div>
+
+
+
